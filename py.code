@@ -1,0 +1,48 @@
+#import packages
+
+import pandas as pd
+import matplotlib.pyplot as plt
+import scipy.stats as st
+import matplotlib as mpl
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+from sklearn import metrics
+
+#set up google colab drive
+
+from google.colab import drive
+drive.mount('/content/drive')
+
+#set directory
+
+cd 'drive/My Drive'
+
+#import dataset
+
+bo = pd.read_csv('bo_csv.csv')
+bo.head()
+
+#split data into x's and y's
+
+y = np.array(bo['BO'])
+x = bo.drop('BO', axis = 1)
+x = np.array(x)
+
+# Split the data into training and testing sets
+train_features, test_features, train_labels, test_labels = train_test_split(x, y, test_size = 0.25, random_state = 5)
+
+#Random Forest Classification
+
+classifier = RandomForestClassifier(n_estimators=10, criterion='gini', random_state=5, max_depth=3)
+classifier.fit(train_features, train_labels)
+label_pred = regressor.predict(test_features)
+
+#Calculate the absolute errors
+errors = abs(label_pred - test_labels)
+
+#Print out the mean absolute error (mae)
+print('Mean Absolute Error:', round(np.mean(errors), 2), 'degrees.')
+
+## Mean Absolute Error: 0.55 degrees.
+
